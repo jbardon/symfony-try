@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Flash messages</h1>
+    
+    <!-- peak au lieu de get pour garder -->
+    <!-- en général les clés sont notice, warning et error -->
+    
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="flash-notice">
+        {{ flash_message }}
+        </div>
+    {% endfor %}
+{% endblock %}
