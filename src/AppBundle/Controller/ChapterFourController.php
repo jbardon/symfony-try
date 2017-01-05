@@ -22,8 +22,8 @@ class ChapterFourController
     }
 
     /**
-    * @Route("/chapter4/number/{count}")
-    */
+     * @Route("/chapter4/number/{count}")
+     */
     public function numberActionCount($count)
     {
         $numbers = array();
@@ -41,8 +41,8 @@ class ChapterFourController
 
 
     /**
-    * @Route("/api/chapter4/number")
-    */
+     * @Route("/api/chapter4/number")
+     */
     public function apiNumberAction()
     {
         $data = array(
@@ -52,4 +52,12 @@ class ChapterFourController
         // calls json_encode() and sets the Content-Type header
         return new JsonResponse($data);
     }
+	
+   /**
+	* Used by ChapterFive:forward
+	*/
+	public function forwardAction($name, $color)
+	{
+		return new Response('<p style="color:' .$color. ';">' .$name. '</p>');
+	}
 }
