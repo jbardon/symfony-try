@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class LuckyTemplateController extends Controller
+class ChapterFiveController extends Controller
 {
    /**
-    * @Route("/lucky/template")
+    * @Route("/chapter5/template")
     */
     public function numberAction()
     {
@@ -24,7 +24,7 @@ class LuckyTemplateController extends Controller
     }
 	
    /**
-    * @Route("/lucky/template/simple")
+    * @Route("/chapter5/template/simple")
     */
     public function numberSimpleAction()
     {
@@ -34,44 +34,43 @@ class LuckyTemplateController extends Controller
 		);
 	}
 
-// A quoi sert name ?
    /**
-    * @Route("/lucky/name/{name}", name="toto")
+    * @Route("/chapter5/name/{name}", name="toto")
     */
     public function nameAction($name){
         return new Response($name);
     }
 
    /**
-    * @Route("/lucky/default/params/{arg}")
+    * @Route("/chapter5/default/params/{arg}")
     */
     public function defaultParamsAction($arg, $arg2 = "default"){
         return new Response($arg . " " . $arg2);
     }
 
    /**
-    * @Route("/lucky/redirect/home")
+    * @Route("/chapter5/redirect/home")
     */
     public function redirectHomeAction(){
         return $this->redirectToRoute('homepage');
     }
 
    /**
-    * @Route("/lucky/nothing")
+    * @Route("/chapter5/nothing")
     */
     public function notFoundAction(){
         throw $this->createNotFoundException('Nothing to see');
     }
 
    /**
-    * @Route("/lucky/request")
+    * @Route("/chapter5/request")
     */
     public function requestAction(Request $request){
         return new Response($request->query->get('page', 8));
     }
 
    /**
-    * @Route("/lucky/session")
+    * @Route("/chapter5/session")
     */
     public function sessionAction(Request $request){
 
@@ -90,7 +89,7 @@ class LuckyTemplateController extends Controller
     }
 
    /**
-    * @Route("/lucky/flash")
+    * @Route("/chapter5/flash")
     */
     public function flashAction(){
         // comme session mais utilisé une fois

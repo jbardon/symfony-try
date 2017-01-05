@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-class LuckyController
+class ChapterFourController
 {
     /**
-     * @Route("/lucky/number")
+     * @Route("/chapter4/number")
      */
     public function numberAction()
     {
@@ -22,7 +22,7 @@ class LuckyController
     }
 
     /**
-    * @Route("/lucky/number/{count}")
+    * @Route("/chapter4/number/{count}")
     */
     public function numberActionCount($count)
     {
@@ -41,7 +41,7 @@ class LuckyController
 
 
     /**
-    * @Route("/api/lucky/number")
+    * @Route("/api/chapter4/number")
     */
     public function apiNumberAction()
     {
