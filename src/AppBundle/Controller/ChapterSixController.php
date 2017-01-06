@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class ChapterSixController
+class ChapterSixController extends Controller
 {
     /**
      * @Route("/chapter6/blog")
@@ -75,4 +77,53 @@ class ChapterSixController
         // 3 paramètres spéciaux: _controller, _format et _locale
         return new Response("formatRoute: " .$_format);
     }
+
+   /**
+    * @Route("/chapter6/hello/{name}", name="hello")
+    */
+    public function helloAction($name)
+    {
+        return new Response("helloAction: " .$name);
+    }
+
+   /**
+    * @Route("/chapter6/generate")
+    */
+    public function generateAction()
+    {
+        $params = $this->get('router')->match('/chapter6/fr');
+
+        $uri = $this->get('router')->generate('hello', array(
+            'name' => 'world'
+        ));
+
+        $uri2 = $this->generateUrl('hello', array(
+            'name' => 'world',
+            'notdefined' => "toto" //Add as GET parameter
+        ));
+
+        $abs = $this->get('router')->generate('hello', array(
+            'name' => 'world'
+        ), UrlGeneratorInterface::ABSOLUTE_URL);
+
+        return $this->json(
+            array(
+                "params" => $params,
+                "uri" => $uri,
+                "uri2" => $uri2,
+                "absolute" => $abs
+            )
+        );
+    }
+
+   /**
+    * @Route("/chapter6/generate/template")
+    */
+    public function generateTemplateAction()
+    {      
+        return $this->render(
+			'lucky/link.html.twig'
+		);
+    }
+
 }

@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('hello', {'name': 'world'}) }}">Clic relative</a>
+    <a href="{{ url('hello', {'name': 'world'}) }}">Clic absolute</a>
+{% endblock %}
