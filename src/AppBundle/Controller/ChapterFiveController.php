@@ -16,7 +16,7 @@ class ChapterFiveController extends Controller
     public function numberAction()
     {
         $html = $this->container->get('templating')->render(
-            'lucky/number.html.twig',
+            'chapter5/number.html.twig',
             array('luckyNumberList' => "1, 85, 21, 95")
         );
 
@@ -29,7 +29,7 @@ class ChapterFiveController extends Controller
     public function numberSimpleAction()
     {
 		return $this->render(
-			'lucky/number.html.twig',
+			'chapter5/number.html.twig',
 			array('luckyNumberList' => "1, 85, 21, 95")
 		);
 	}
@@ -96,7 +96,7 @@ class ChapterFiveController extends Controller
         $this->addFlash('notice', 'flash action trigerred');
 
         return $this->render(
-			'lucky/flash.html.twig'
+			'chapter5/flash.html.twig'
         );
     }
 

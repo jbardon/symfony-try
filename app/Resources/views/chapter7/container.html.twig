@@ -1,0 +1,9 @@
+{% extends 'chapter7/inheritance.html.twig' %}
+
+{% block body %}
+    <h1>Recent Articles<h1>
+    
+    {% for article in articles %}
+        {{ include('chapter7/include.html.twig', { 'article': article, 'foo': bar }) }}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{# app/Resources/views/chapter7/inheritance.html.twig #}
+{# Peut être mis dans src/AppBundle/Resources/views et référencé par AppBundle::inheritance.html.php (format.engine) #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Test Application{% endblock %}</title>
+    </head>
+    <body>
+        <div id="sidebar">
+            {% block sidebar %}
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            {% endblock %}
+        </div>
+
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+
+        <div id="footer">
+            {% block footer %}
+                <span>Awesome footer</span>
+            {% endblock %}
+        </div>
+    </body>
+</html>

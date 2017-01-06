@@ -122,7 +122,7 @@ class ChapterSixController extends Controller
     public function generateTemplateAction()
     {      
         return $this->render(
-			'lucky/link.html.twig'
+			'chapter6/link.html.twig'
 		);
     }
 
