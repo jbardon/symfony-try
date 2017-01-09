@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class ChapterSevenController extends Controller
@@ -141,6 +142,59 @@ class ChapterSevenController extends Controller
     {      
         return $this->render(
 			'chapter7/variables.html.twig'
+		);
+    }
+
+   /**
+    * @Route("/chapter7/dump")
+    */
+    public function dumpAction()
+    {      
+        $entries = array(
+            array(
+                'title' => "First",
+				'slug' => 1
+            ),
+            array(
+                'title' => "Second",
+				'slug' => 2
+            )
+        );
+
+        $outries = array(
+            array(
+                'name' => "First",
+				'social' => 1
+            ),
+            array(
+                'name' => "Second",
+				'social' => 2
+            )
+        );
+
+        dump($entries);
+
+        return $this->render(
+			'chapter7/dump.html.twig',
+            array(
+                'outries' => $outries
+            )
+		);
+    }
+
+   /**
+    * @Route("/chapter7/format", name="format")
+    */
+    public function formatAction(Request $request)
+    {      
+        // Marche pas : à creuser
+        $format = $request->getRequestFormat();
+
+        //Alternative
+        $format = $request->query->get('_format');
+
+        return $this->render(
+			'chapter7/format.' .$format. '.twig'
 		);
     }
 }
