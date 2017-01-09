@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ChapterSevenController extends Controller
 {   
    /**
-    * @Route("/chapter7/template")
+    * @Route("/chapter7/template", name="template")
     */
     public function templateAction()
     {      
@@ -30,9 +30,9 @@ class ChapterSevenController extends Controller
     }
 
     /**
-    * @Route("/chapter7/child")
+    * @Route("/chapter7/child/{max}")
     */
-    public function childAction()
+    public function childAction($max)
     {      
 
         $entries = array(
@@ -79,5 +79,68 @@ class ChapterSevenController extends Controller
             )
 		);
     }
+	
+   /**
+    * @Route("/chapter7/embed")
+    */
+    public function embedAction()
+    {      
+        return $this->render(
+			'chapter7/embed.html.twig'
+		);
+    }
+	
+   /**
+    * @Route("/chapter7/embedded/{max}")
+    */
+    public function embeddedAction($max)
+    {      
+		$entries = array(
+            array(
+                'title' => "First",
+				'slug' => 1
+            ),
+            array(
+                'title' => "Second",
+				'slug' => 2
+            )
+        );
 
+        return $this->render(
+			'chapter7/embedded.html.twig',
+            array(
+                'articles' => $entries
+            )
+		);
+    }
+	
+   /**
+    * @Route("/chapter7/async")
+    */
+    public function asyncAction()
+    {      
+        return $this->render(
+			'chapter7/async.html.twig'
+		);
+    }
+	
+   /**
+    * @Route("/chapter7/full")
+    */
+    public function fullAction()
+    {      
+        return $this->render(
+			'chapter7/full.html.twig'
+		);
+    }
+
+   /**
+    * @Route("/chapter7/variables")
+    */
+    public function variablesAction()
+    {      
+        return $this->render(
+			'chapter7/variables.html.twig'
+		);
+    }
 }

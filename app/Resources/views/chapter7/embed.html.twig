@@ -1,0 +1,12 @@
+{% extends 'chapter7/inheritance.html.twig' %}
+
+{% block sidebar %}
+
+<div id="embed">
+	{{ render(controller(
+		'AppBundle:ChapterSeven:embedded',
+		{ 'max': 3 }
+	)) }}
+</div>
+
+{% endblock %}

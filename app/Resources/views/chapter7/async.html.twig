@@ -1,0 +1,15 @@
+{% extends 'chapter7/inheritance.html.twig' %}
+
+{% block sidebar %}
+
+<div id="embed">
+	{{ render_hinclude(
+		  url('template'),
+		  { 'default': 'chapter7/wait.html.twig'}
+	   )
+	}}
+</div>
+
+<script src="hinclude.js"></script>
+
+{% endblock %}
