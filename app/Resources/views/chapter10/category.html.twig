@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{ category.name }} ({{ category.id }})</h2>
+    <hr/>
+
+    {% for product in category.products %}
+        {{ include('chapter10/product.html.twig', { 'product': product }) }}
+    {% endfor %}
+{% endblock %}

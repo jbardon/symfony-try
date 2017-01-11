@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Category;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -364,4 +365,112 @@ class ChapterTenController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/chapter10/repository", name="all")
+     */
+    public function repositoryAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository('AppBundle:Product')
+            ->findAllOrderedByName();
+
+        if (!$products) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+
+        return $this->render(
+            'chapter10/list_product.html.twig',
+            array(
+                'products' => $products
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/create/full")
+     */
+    public function createFullProductAction()
+    {
+        $category = new Category();
+        $category->setName('Computer Peripherals');
+
+        $product = new Product();
+        $product->setName('Screen');
+        $product->setPrice(79.99);
+        $product->setDescription('Enormous and high quality pixel definition!');
+
+        // relate this product to the category
+        $product->setCategory($category);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($category);
+        $em->persist($product);
+        $em->flush();
+
+        return new Response(
+            'Saved new product with id: '.$product->getId()
+            .' and new category with id: '.$category->getId()
+        );
+    }
+
+    /**
+     * @Route("/chapter10/show/full/{productId}")
+     */
+    public function showFullProductAction($productId)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneById($productId);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for id ' . $productId
+            );
+        }
+
+        // prints "Proxies\AppBundleEntityCategoryProxy"
+        dump(get_class($product->getCategory()));
+
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/show/full/cat/{categoryId}")
+     */
+    // Plus d'infos relations:
+    // http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
+    public function showFullCategoryAction($categoryId)
+    {
+        $category = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findOneById($categoryId);
+
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No category found for id ' . $category
+            );
+        }
+
+        return $this->render(
+            'chapter10/category.html.twig',
+            array(
+                'category' => $category
+            )
+        );
+    }
+
+    // Lifecycle events
+    // Execute, set property before events
+    // http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
+
+    // Pour des logs ou send mail
+    // Register event listener and subscribers
 }
