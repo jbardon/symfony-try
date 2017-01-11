@@ -44,38 +44,164 @@ class ChapterTenController extends Controller
 
         if (!$product) {
             throw $this->createNotFoundException(
-                'No product found for id '.$productId
+                'No product found for id ' . $productId
             );
         }
 
-        dump($product);
-        return new Response('See dump show');
-
-        // AUTO GENERATED REPOSITORY
-/*
-        // dynamic method names to find a single product based on a column value
-        $product = $repository->findOneById($productId);
-        $product = $repository->findOneByName('Keyboard');
-
-        // dynamic method names to find a group of products based on a column value
-        $products = $repository->findByPrice(19.99);
-
-        // find *all* products
-        $products = $repository->findAll();
-*/
-
-        // COMPLEX findOneBy et findBy
-/*
-        // query for a single product matching the given name and price
-        $product = $repository->findOneBy(
-            array('name' => 'Keyboard', 'price' => 19.99)
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
         );
+    }
 
-        // query for multiple products matching the given name, ordered by price
-        $products = $repository->findBy(
-            array('name' => 'Keyboard'),
-            array('price' => 'ASC')
+    /**
+     * @Route("/chapter10/id/{productId}", defaults={"productId" = "1"})
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function idAction($productId)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneById($productId);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for id ' . $productId
+            );
+        }
+
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
         );
-*/
+    }
+
+    /**
+     * @Route("/chapter10/name/{name}", defaults={"name" = "Keyboard"})
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function nameAction($name)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneByName($name);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for name ' . $name
+            );
+        }
+
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/price/{price}", defaults={"price" = "19.99"})
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function priceAction($price)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneByPrice($price);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for price ' . $price
+            );
+        }
+
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/all")
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function allAction()
+    {
+        $products = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findAll();
+
+        if (!$products) {
+            throw $this->createNotFoundException(
+                'No product found'
+            );
+        }
+
+        return $this->render(
+            'chapter10/list_product.html.twig',
+            array(
+                'products' => $products
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/single/{name}/{price}", defaults={"name" = "Keyboard", "price" = "19.99"})
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function singleAdvancedAction($name, $price)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneBy(
+                array('name' => $name, 'price' => $price)
+            );
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found'
+            );
+        }
+
+        return $this->render(
+            'chapter10/product.html.twig',
+            array(
+                'product' => $product
+            )
+        );
+    }
+
+    /**
+     * @Route("/chapter10/multiple/{name}", defaults={"name" = "Keyboard"})
+     */
+    // see @ParamConverter (FrameworkExtraBundle)to get object automatically
+    public function multipleAdvancedAction($name)
+    {
+        $products = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findBy(
+                array('name' => $name),
+                array('price' => 'ASC')
+            );
+
+        if (!$products) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+
+        return $this->render(
+            'chapter10/list_product.html.twig',
+            array(
+                'products' => $products
+            )
+        );
     }
 }

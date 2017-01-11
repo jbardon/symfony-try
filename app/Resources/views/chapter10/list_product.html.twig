@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>All articles<h1>
+
+    {% for product in products %}
+        {{ include('chapter10/product.html.twig', { 'product': product }) }}
+    {% endfor %}
+{% endblock %}
