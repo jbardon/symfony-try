@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.task, 'Custom label') }}
+        {{ form_errors(form.task) }}
+        {{ form_widget(form.task) }}
+    </div>
+
+    <div>
+        {{ form_label(form.dueDate, {'attr': {'class': 'task_field'}}) }}
+        {{ form_errors(form.dueDate) }}
+        {{ form_widget(form.dueDate) }}
+    </div>
+
+    <div>
+        {{ form_widget(form.save) }}
+    </div>
+
+<span>Id task: {{ form.task.vars.id }}</span>
+<span>Full name task: {{ form.task.vars.full_name }}</span>
+
+{{ form_end(form) }}
