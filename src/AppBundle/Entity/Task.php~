@@ -102,28 +102,4 @@ class Task
     {
         return $this->dueDate;
     }
-
-    /**
-     * Set project
-     *
-     * @param \AppBundle\Entity\Project $project
-     *
-     * @return Task
-     */
-    public function setProject(Project $project = null)
-    {
-        $this->project = $project;
-
-        return $this;
-    }
-
-    /**
-     * Get project
-     *
-     * @return \AppBundle\Entity\Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
 }

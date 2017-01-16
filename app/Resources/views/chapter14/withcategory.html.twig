@@ -12,11 +12,17 @@
         {{ form_errors(form.dueDate) }}
         {{ form_widget(form.dueDate, {'attr': {'class': 'task_field'}}) }}
     </div>
+
+    <h3>Project</h3>
+    <div class="project">
+        {{ form_row(form.project.name) }}
+    </div>
+
     <div>
         {{ form_widget(form.save) }}
     </div>
 
-<span>Id task: {{ form.task.vars.id }}</span>
-<span>Full name task: {{ form.task.vars.full_name }}</span>
+    <span>Id task: {{ form.task.vars.id }}</span>
+    <span>Full name task: {{ form.task.vars.full_name }}</span>
 
 {{ form_end(form) }}

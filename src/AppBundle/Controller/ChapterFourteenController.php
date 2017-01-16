@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Task;
+use AppBundle\Form\TaskType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -107,9 +109,74 @@ class ChapterFourteenController extends Controller
     }
 
     /**
-     * @Route("/chapter14/new/hand")
+     * @Route("/chapter14/new/hand", name="hand")
      */
     public function newHandAction(Request $request)
+    {
+        // create a task and give it some dummy data for this example
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+
+        $form = $this->createFormBuilder($task)
+            ->setAction($this->generateUrl('hand')) // custom
+            ->setMethod('GET')                      // custom
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Task'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return new Response("Submited with custom method & url");
+        }
+
+        return $this->render('chapter14/renderinghand.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/chapter14/new/deported")
+     */
+    public function newDeportedAction(Request $request)
+    {
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+
+        $form = $this->createForm(TaskType::class, $task);
+
+        return $this->render('chapter14/buildingform.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/chapter14/new/infos")
+     */
+    public function newInfoAction(Request $request)
+    {
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+
+        $form = $this->createForm(TaskType::class, $task);
+
+        // Set data (even mapped)
+        //$form->get('dueDate')->setData(new \DateTime());
+
+        // Get data (even mapped)
+        //$form->get('dueDate')->getData();
+
+        return new Response("OK");
+    }
+
+    /**
+     * @Route("/chapter14/new/save")
+     */
+    public function newSaveAction(Request $request)
     {
         // create a task and give it some dummy data for this example
         $task = new Task();
@@ -122,7 +189,54 @@ class ChapterFourteenController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Create Task'))
             ->getForm();
 
-        return $this->render('chapter14/renderinghand.html.twig', array(
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($task);
+            $em->flush();
+
+            return new Response("Success");
+        }
+
+        return $this->render('chapter14/buildingform.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/chapter14/new/embedded")
+     */
+    public function newEmbeddedAction(Request $request)
+    {
+        // create a task and give it some dummy data for this example
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+
+        // Pas obligatoire
+        $project = new Project();
+        $project->setName("NoName");
+
+        $task->setProject($project);
+        //
+
+        $form = $this->createForm(TaskType::class, $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($task);
+            $em->persist($task->getProject()); // Attention sous-entité
+            $em->flush();
+
+            return new Response("Success");
+        }
+
+        return $this->render('chapter14/withcategory.html.twig', array(
             'form' => $form->createView(),
         ));
     }
