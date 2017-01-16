@@ -11,7 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -240,4 +244,41 @@ class ChapterFourteenController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * @Route("/chapter14/new/simple")
+     */
+    public function newSimpleAction(Request $request)
+    {
+        $defaultData = array('message' => 'Type your message here');
+
+        $form = $this->createFormBuilder($defaultData)
+            ->add('name', TextType::class, array(
+                'constraints' => new Length(array('min' => 3)),
+            ))
+            ->add('email', EmailType::class)
+            ->add('message', TextareaType::class, array(
+                'constraints' => array(
+                    new NotBlank(),
+                    new Length(array('min' <= 3))
+                ),
+            ))
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            dump($data);
+
+            return new Response("OK");
+        }
+
+        return $this->render('chapter14/buildingform.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
 }
