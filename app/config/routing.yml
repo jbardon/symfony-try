@@ -2,6 +2,10 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+# For logout
+logout:
+    path: /logout
+
 # importer d'autres fichiers 
 # resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 

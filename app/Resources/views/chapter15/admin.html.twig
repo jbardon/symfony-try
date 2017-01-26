@@ -2,4 +2,13 @@
 
 {% block body %}
     <h1>Admin page</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Coucou</p>
+    {% endif %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Username: {{ app.user.username }}</p>
+    {% endif %}
+
 {% endblock %}
