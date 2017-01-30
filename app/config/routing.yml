@@ -6,6 +6,13 @@ app:
 logout:
     path: /chapter15/logout
 
+# For local
+#contact:
+#  path: /{_locale}/contact
+#  defaults: { _controller: AppBundle:Contact:index }
+#  requirements:
+#    _locale: en|fr|de
+
 # importer d'autres fichiers 
 # resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 

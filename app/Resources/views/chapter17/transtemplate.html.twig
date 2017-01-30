@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain "messages" %}
+
+{% block body %}
+    <p>locale: {{ req_locale }}</p>
+
+    <p>
+        {% trans %}Symfony is great{% endtrans %}
+    </p>
+
+    <p>
+        {% transchoice count %}
+            {0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
+        {% endtranschoice %}
+    </p>
+
+    <p>
+        {% trans with {'%name%': 'Fabien'} from "messages" into "fr" %}Hello %name%{% endtrans %}
+    </p>
+
+    <p>{{ "Symfony is great"|trans }}</p>
+    <p></p>
+{% endblock %}
