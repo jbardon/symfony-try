@@ -20,7 +20,6 @@ class ChapterFiveteenController extends Controller
         return $this->render('chapter15/admin.html.twig');
     }
 
-
     /**
      * @Route("/chapter15/denied")
      */

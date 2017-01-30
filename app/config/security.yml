@@ -8,20 +8,28 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # Must be before main
+        security_area:
+              pattern: ^/chapter15
+              http_basic: ~
+
+              logout:
+                  invalidate_session: true
+                  path: /chapter15/logout
+                  target: /
+
         main:
-            anonymous: ~
+            anonymous: true
             # activate different ways to authenticate
 
-            http_basic: ~
+            #http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
-            logout:
-                invalidate_session: true
-                path: /logout
-                target: /
+
+
 
     access_control:
             # require ROLE_ADMIN for /chapter15/admin*

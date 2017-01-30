@@ -4,7 +4,7 @@ app:
 
 # For logout
 logout:
-    path: /logout
+    path: /chapter15/logout
 
 # importer d'autres fichiers 
 # resource: '@AcmeOtherBundle/Resources/config/routing.yml'
