@@ -1,5 +1,9 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
+
+imports:
+    - { resource: services/mailer.yml }
+
 parameters:
 #    parameter_name: value
 
@@ -7,3 +11,16 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+     app.newsletter_manager:
+         class: AppBundle\Newsletter\NewsletterManager
+         arguments: ['@app.mailer'] # @service_name refers to another service ### constructor injection
+         calls:
+            - [setMailer, ['@app.mailer']] # dependence optionelle (appel d'un setter) ### setter injection
+
+         # property injection
+
+         # sympfony core services
+         # @mailer, @templating
+
+
+

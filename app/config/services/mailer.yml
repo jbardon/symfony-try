@@ -1,0 +1,8 @@
+parameters:
+    app.mailer.transport: sendmail
+
+services:
+    app.mailer:
+        class: AppBundle\Mailer
+        arguments: ['%app.mailer.transport%']
+#       arguments: ['@?app.mailer'] # dependence optionelle
